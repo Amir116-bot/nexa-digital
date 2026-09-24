@@ -1,0 +1,149 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "projects": "Our Work",
+    "about": "About",
+    "howWeWork": "How We Work",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "quote": "Get a Quote"
+  },
+  "hero": {
+    "title": "We turn your ideas into successful digital experiences",
+    "text": "At Nexa Digital we help individuals and businesses build a strong digital presence through web design, app development, and brand and visual content design.",
+    "ctaPrimary": "Start your project",
+    "ctaSecondary": "Explore our services"
+  },
+  "trustBar": [
+    "Solutions built around your needs",
+    "Quality and attention to detail",
+    "Ongoing support after delivery",
+    "Responsive design across all devices"
+  ],
+  "servicesSection": {
+    "title": "Digital services that help you grow",
+    "text": "We offer complete digital solutions that help you look professional, reach your audience, and turn your ideas into successful projects.",
+    "detailsBtn": "View details",
+    "requestBtn": "Request service",
+    "allBtn": "All services"
+  },
+  "why": {
+    "title": "Why Nexa Digital?",
+    "items": [
+      "We understand your project's needs before we start building.",
+      "We design custom solutions instead of forcing you into a template.",
+      "We care about detail and user experience.",
+      "We use modern, scalable technology.",
+      "We keep communication clear throughout the project.",
+      "We provide support and adjustments after delivery, as agreed."
+    ]
+  },
+  "process": {
+    "title": "How we work",
+    "steps": [
+      { "title": "Discover", "text": "Understand the idea and the need." },
+      { "title": "Scope", "text": "Define the scope of work and requirements." },
+      { "title": "Design", "text": "Prepare the initial design." },
+      { "title": "Build", "text": "Development and implementation." },
+      { "title": "Test", "text": "Testing and refinement." },
+      { "title": "Deliver", "text": "Delivery and support." }
+    ]
+  },
+  "projectsSection": {
+    "title": "Our work",
+    "text": "A look at some of the projects we've worked on.",
+    "empty": "Our portfolio is coming soon — get in touch to discuss your project.",
+    "viewProject": "Visit project"
+  },
+  "cta": {
+    "title": "Have an idea you want to turn into a digital project?",
+    "text": "Tell us what you need and we'll reach out to discuss the details.",
+    "quoteBtn": "Get a quote",
+    "whatsappBtn": "Message us on WhatsApp"
+  },
+  "faqSection": {
+    "title": "Frequently asked questions",
+    "text": "Answers to the most common questions."
+  },
+  "footer": {
+    "desc": "A digital agency turning your ideas into successful digital experiences.",
+    "pages": "Pages",
+    "servicesTitle": "Services",
+    "contactTitle": "Contact",
+    "follow": "Follow us",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions",
+    "rights": "All rights reserved."
+  },
+  "quotePage": {
+    "title": "Request a quote",
+    "text": "Fill out the form below and we'll get back to you as soon as possible.",
+    "fullName": "Full name",
+    "email": "Email",
+    "phone": "Phone number",
+    "company": "Company or project name (optional)",
+    "serviceType": "Service type",
+    "description": "Project description",
+    "budget": "Estimated budget",
+    "deadline": "Expected delivery date",
+    "file": "Attach a file (optional)",
+    "preferredContact": "Preferred contact method",
+    "privacyConsent": "I agree to the privacy policy",
+    "submit": "Submit request",
+    "submitting": "Submitting...",
+    "successTitle": "Your request was received",
+    "successText": "We'll contact you soon using the details you provided.",
+    "errorGeneric": "Something went wrong, please try again."
+  },
+  "contactPage": {
+    "title": "Contact us",
+    "text": "We'd love to hear from you.",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send message",
+    "info": "Contact details"
+  },
+  "aboutPage": {
+    "title": "About us",
+    "text1": "Nexa Digital is a digital agency specialized in helping individuals, startups, and organizations build a professional digital presence.",
+    "text2": "We believe every project has its own character, so we design custom solutions rather than relying on ready-made templates — with a focus on quality, clarity, and reliability."
+  },
+  "servicesPage": {
+    "title": "Our services",
+    "text": "Every digital solution we offer, in one place.",
+    "filterAll": "All",
+    "categories": {
+      "development": "Development",
+      "design": "Design",
+      "content": "Content",
+      "marketing": "Marketing",
+      "extra": "Extra services"
+    }
+  },
+  "projectsPage": {
+    "title": "Our work",
+    "text": "A look at some of the projects we've delivered.",
+    "demoLabel": "Demo project"
+  },
+  "howWorkPage": {
+    "title": "How we work"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The link you followed doesn't exist or was moved.",
+    "back": "Back to home"
+  },
+  "serverError": {
+    "title": "Something went wrong",
+    "text": "We're working on fixing it — please try again shortly.",
+    "retry": "Try again"
+  },
+  "common": {
+    "whatsapp": "WhatsApp",
+    "langSwitch": "العربية",
+    "loading": "Loading..."
+  }
+}
