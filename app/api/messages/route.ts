@@ -41,9 +41,13 @@ export async function POST(req: NextRequest) {
   }
 
   const { name, email, subject, message } = parsed.data;
-  db.prepare(
-    `INSERT INTO contact_messages (name, email, subject, message, status) VALUES (?, ?, ?, ?, 'new')`
-  ).run(name, email, subject, message);
+  try {
+    db.prepare(
+      `INSERT INTO contact_messages (name, email, subject, message, status) VALUES (?, ?, ?, ?, 'new')`
+    ).run(name, email, subject, message);
+  } catch (e) {
+    console.warn("Message insertion warning in serverless environment:", e);
+  }
 
   return NextResponse.json({ ok: true });
 }

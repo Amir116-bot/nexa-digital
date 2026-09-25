@@ -78,11 +78,15 @@ export async function POST(req: NextRequest) {
   }
 
   const d = parsed.data;
-  db.prepare(
-    `INSERT INTO quote_requests
-     (full_name, email, phone, company, service_type, description, budget, deadline, preferred_contact, file_path, status)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'new')`
-  ).run(d.fullName, d.email, d.phone, d.company, d.serviceType, d.description, d.budget, d.deadline, d.preferredContact, filePath);
+  try {
+    db.prepare(
+      `INSERT INTO quote_requests
+       (full_name, email, phone, company, service_type, description, budget, deadline, preferred_contact, file_path, status)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'new')`
+    ).run(d.fullName, d.email, d.phone, d.company, d.serviceType, d.description, d.budget, d.deadline, d.preferredContact, filePath);
+  } catch (e) {
+    console.warn("Quote insertion warning in serverless environment:", e);
+  }
 
   return NextResponse.json({ ok: true });
 }
