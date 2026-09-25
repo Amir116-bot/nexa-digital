@@ -3,15 +3,27 @@ import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/apiGuard";
 import { z } from "zod";
 
-export async function GET() {
-  const { response } = await requireAdmin();
-  if (response) return response;
-  const rows = db.prepare(`SELECT * FROM quote_requests ORDER BY created_at DESC`).all();
-  return NextResponse.json(rows);
-}
+import { supabase } from "@/lib/supabase";
 import path from "path";
 import fs from "fs";
 import crypto from "crypto";
+
+export async function GET() {
+  const { response } = await requireAdmin();
+  if (response) return response;
+
+  if (supabase) {
+    const { data } = await supabase.from("quote_requests").select("*").order("created_at", { ascending: false });
+    if (data && data.length > 0) return NextResponse.json(data);
+  }
+
+  try {
+    const rows = db.prepare(`SELECT * FROM quote_requests ORDER BY created_at DESC`).all();
+    return NextResponse.json(rows);
+  } catch {
+    return NextResponse.json([]);
+  }
+}
 
 const schema = z.object({
   fullName: z.string().min(1).max(120),
@@ -68,16 +80,39 @@ export async function POST(req: NextRequest) {
     if (!ALLOWED_TYPES.has(file.type)) {
       return NextResponse.json({ error: "file_type_not_allowed" }, { status: 400 });
     }
-    const uploadsDir = path.join(process.cwd(), "public", "uploads");
-    fs.mkdirSync(uploadsDir, { recursive: true });
-    const ext = path.extname(file.name).slice(0, 10);
-    const safeName = `${Date.now()}-${crypto.randomBytes(6).toString("hex")}${ext}`;
-    const buffer = Buffer.from(await file.arrayBuffer());
-    fs.writeFileSync(path.join(uploadsDir, safeName), buffer);
-    filePath = `/uploads/${safeName}`;
+    try {
+      const uploadsDir = path.join(process.cwd(), "public", "uploads");
+      fs.mkdirSync(uploadsDir, { recursive: true });
+      const ext = path.extname(file.name).slice(0, 10);
+      const safeName = `${Date.now()}-${crypto.randomBytes(6).toString("hex")}${ext}`;
+      const buffer = Buffer.from(await file.arrayBuffer());
+      fs.writeFileSync(path.join(uploadsDir, safeName), buffer);
+      filePath = `/uploads/${safeName}`;
+    } catch {}
   }
 
   const d = parsed.data;
+
+  if (supabase) {
+    try {
+      await supabase.from("quote_requests").insert([{
+        full_name: d.fullName,
+        email: d.email,
+        phone: d.phone,
+        company: d.company,
+        service_type: d.serviceType,
+        description: d.description,
+        budget: d.budget,
+        deadline: d.deadline,
+        preferred_contact: d.preferredContact,
+        file_path: filePath,
+        status: "new",
+      }]);
+    } catch (e) {
+      console.warn("Supabase insertion error:", e);
+    }
+  }
+
   try {
     db.prepare(
       `INSERT INTO quote_requests
