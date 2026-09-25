@@ -134,14 +134,14 @@ export function seed(db: Database.Database) {
     site_name: "Nexa Digital",
     tagline_ar: "نحوّل أفكارك إلى تجارب رقمية ناجحة",
     tagline_en: "We turn your ideas into successful digital experiences",
-    email: "hello@nexadigital.com",
-    phone: "+213500000000",
-    whatsapp: "+213500000000",
+    email: "dnexa99@gmail.com",
+    phone: "+213795329388",
+    whatsapp: "+213795329388",
     whatsapp_enabled: "true",
     address_ar: "الجزائر",
     address_en: "Algeria",
-    instagram: "https://instagram.com/nexadigital",
-    facebook: "https://facebook.com/nexadigital",
+    instagram: "https://www.instagram.com/nexa_dig?stkn=bzJncW9zaDUxMHQ1",
+    facebook: "",
     tiktok: "",
     linkedin: "",
     telegram: "",
@@ -159,7 +159,7 @@ export function seed(db: Database.Database) {
   };
   const upsertSetting = db.prepare(`
     INSERT INTO site_settings (key, value) VALUES (?, ?)
-    ON CONFLICT(key) DO NOTHING
+    ON CONFLICT(key) DO UPDATE SET value = excluded.value
   `);
   for (const [k, v] of Object.entries(settings)) upsertSetting.run(k, v);
 
