@@ -1,20 +1,54 @@
 import { db } from "@/lib/db";
+import { supabase } from "@/lib/supabase";
 import { Briefcase, FolderKanban, FileText, Mail as MailIcon } from "lucide-react";
 
-function count(table: string, where = "") {
-  const row = db.prepare(`SELECT COUNT(*) as c FROM ${table} ${where}`).get() as { c: number };
-  return row.c;
+async function countTable(table: string, whereCol = "", whereVal = ""): Promise<number> {
+  if (supabase) {
+    try {
+      let q = supabase.from(table).select("*", { count: "exact", head: true });
+      if (whereCol && whereVal) {
+        q = q.eq(whereCol, whereVal);
+      }
+      const { count } = await q;
+      if (count !== null && count !== undefined) return count;
+    } catch {}
+  }
+  try {
+    const whereClause = whereCol && whereVal ? `WHERE ${whereCol} = '${whereVal}'` : "";
+    const row = db.prepare(`SELECT COUNT(*) as c FROM ${table} ${whereClause}`).get() as { c: number } | undefined;
+    if (row && typeof row.c === "number") return row.c;
+  } catch {}
+  return 0;
 }
 
-export default function AdminDashboardPage() {
-  const stats = [
-    { label: "الخدمات المنشورة", value: count("services", "WHERE status='published'"), icon: Briefcase },
-    { label: "المشاريع", value: count("projects"), icon: FolderKanban },
-    { label: "طلبات عروض الأسعار", value: count("quote_requests"), icon: FileText },
-    { label: "الرسائل الجديدة", value: count("contact_messages", "WHERE status='new'"), icon: MailIcon },
-  ];
+async function getRecentQuotes(): Promise<any[]> {
+  if (supabase) {
+    try {
+      const { data } = await supabase.from("quote_requests").select("*").order("created_at", { ascending: false }).limit(5);
+      if (data) return data;
+    } catch {}
+  }
+  try {
+    const rows = db.prepare(`SELECT * FROM quote_requests ORDER BY created_at DESC LIMIT 5`).all();
+    if (rows) return rows;
+  } catch {}
+  return [];
+}
 
-  const recentQuotes = db.prepare(`SELECT * FROM quote_requests ORDER BY created_at DESC LIMIT 5`).all() as any[];
+export default async function AdminDashboardPage() {
+  const publishedServicesCount = await countTable("services", "status", "published");
+  const projectsCount = await countTable("projects");
+  const quotesCount = await countTable("quote_requests");
+  const newMessagesCount = await countTable("contact_messages", "status", "new");
+
+  const recentQuotes = await getRecentQuotes();
+
+  const stats = [
+    { label: "الخدمات المنشورة", value: publishedServicesCount, icon: Briefcase },
+    { label: "المشاريع", value: projectsCount, icon: FolderKanban },
+    { label: "طلبات عروض الأسعار", value: quotesCount, icon: FileText },
+    { label: "الرسائل الجديدة", value: newMessagesCount, icon: MailIcon },
+  ];
 
   return (
     <div>
@@ -43,7 +77,7 @@ export default function AdminDashboardPage() {
               </tr>
             </thead>
             <tbody>
-              {recentQuotes.map((q) => (
+              {recentQuotes.map((q: any) => (
                 <tr key={q.id} className="border-b border-black/5">
                   <td className="py-2.5 pe-4">{q.full_name}</td>
                   <td className="py-2.5 pe-4">{q.service_type}</td>
