@@ -131,14 +131,18 @@ export async function getPublishedServices(): Promise<Service[]> {
   const settings = await getSiteSettings();
   const contentEnabled = settings.content_service_enabled === "true";
 
+  console.log("getPublishedServices: Supabase connected?", !!supabase);
+
   if (supabase) {
     try {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("services")
         .select("*")
         .eq("status", "published")
         .order("display_order", { ascending: true })
         .order("id", { ascending: true });
+
+      console.log("getPublishedServices: Supabase data:", data?.length, "error:", error);
 
       if (data && data.length > 0) {
         return (data as Service[]).filter((s) => (s.slug === "content-writing" ? contentEnabled : true));
@@ -152,11 +156,13 @@ export async function getPublishedServices(): Promise<Service[]> {
     const rows = db
       .prepare(`SELECT * FROM services WHERE status = 'published' ORDER BY display_order ASC, id ASC`)
       .all() as Service[];
+    console.log("getPublishedServices: SQLite data:", rows?.length);
     if (rows && rows.length > 0) {
       return rows.filter((s) => (s.slug === "content-writing" ? contentEnabled : true));
     }
   } catch (e) {}
 
+  console.log("getPublishedServices: Using default services");
   return DEFAULT_SERVICES.filter((s) => s.status === "published" && (s.slug === "content-writing" ? contentEnabled : true));
 }
 
