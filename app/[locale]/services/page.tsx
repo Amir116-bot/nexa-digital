@@ -15,7 +15,7 @@ export default async function ServicesPage({ params }: { params: Promise<{ local
   const { locale: raw } = await params;
   const locale = (locales.includes(raw as Locale) ? raw : defaultLocale) as Locale;
   const dict = getDictionary(locale);
-  const services = getPublishedServices();
+  const services = await getPublishedServices();
 
   return (
     <>

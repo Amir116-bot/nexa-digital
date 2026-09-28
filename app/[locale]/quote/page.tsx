@@ -18,7 +18,7 @@ export default async function QuotePage({
   const { service } = await searchParams;
   const locale = (locales.includes(raw as Locale) ? raw : defaultLocale) as Locale;
   const dict = getDictionary(locale);
-  const services = getPublishedServices();
+  const services = await getPublishedServices();
 
   return (
     <>

@@ -15,7 +15,7 @@ export async function generateMetadata({
 }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const l = (locales.includes(locale as Locale) ? locale : defaultLocale) as Locale;
-  const settings = getSiteSettings();
+  const settings = await getSiteSettings();
   const title = l === "ar" ? settings.meta_title_ar : settings.meta_title_en;
   const description = l === "ar" ? settings.meta_description_ar : settings.meta_description_en;
   return {
@@ -32,7 +32,7 @@ export default async function LocaleLayout({
   const { locale: raw } = await params;
   const locale = (locales.includes(raw as Locale) ? raw : defaultLocale) as Locale;
   const dict = getDictionary(locale);
-  const settings = getSiteSettings();
+  const settings = await getSiteSettings();
 
   return (
     <>

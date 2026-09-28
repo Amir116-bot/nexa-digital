@@ -13,10 +13,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const { locale: raw } = await params;
   const locale = (locales.includes(raw as Locale) ? raw : defaultLocale) as Locale;
   const dict = getDictionary(locale);
-  const services = getPublishedServices();
-  const projects = getPublishedProjects(3);
-  const faqs = getPublishedFaqs().slice(0, 6);
-  const settings = getSiteSettings();
+  const services = await getPublishedServices();
+  const projects = await getPublishedProjects(3);
+  const faqs = (await getPublishedFaqs()).slice(0, 6);
+  const settings = await getSiteSettings();
 
   return (
     <>

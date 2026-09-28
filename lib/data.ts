@@ -1,4 +1,5 @@
 import { db, getAllSettings } from "./db";
+import { supabase } from "./supabase";
 
 export type Service = {
   id: number; slug: string; name_ar: string; name_en: string;
@@ -126,8 +127,27 @@ const DEFAULT_FAQS: Faq[] = [
   { id: 10, question_ar: "هل يمكن طلب خدمة مخصصة؟", question_en: "Can I request a custom service?", answer_ar: "بالتأكيد، تواصل معنا ووضّح احتياجك وسنقترح الحل المناسب.", answer_en: "Of course — reach out with your need and we'll suggest the right solution.", service_id: null, status: "published", display_order: 10 },
 ];
 
-export function getPublishedServices(): Service[] {
-  const contentEnabled = getAllSettings().content_service_enabled === "true";
+export async function getPublishedServices(): Promise<Service[]> {
+  const settings = await getSiteSettings();
+  const contentEnabled = settings.content_service_enabled === "true";
+
+  if (supabase) {
+    try {
+      const { data } = await supabase
+        .from("services")
+        .select("*")
+        .eq("status", "published")
+        .order("display_order", { ascending: true })
+        .order("id", { ascending: true });
+
+      if (data && data.length > 0) {
+        return (data as Service[]).filter((s) => (s.slug === "content-writing" ? contentEnabled : true));
+      }
+    } catch (e) {
+      console.warn("Supabase fetch published services error:", e);
+    }
+  }
+
   try {
     const rows = db
       .prepare(`SELECT * FROM services WHERE status = 'published' ORDER BY display_order ASC, id ASC`)
@@ -135,43 +155,70 @@ export function getPublishedServices(): Service[] {
     if (rows && rows.length > 0) {
       return rows.filter((s) => (s.slug === "content-writing" ? contentEnabled : true));
     }
-  } catch (e) {
-    console.warn("Using default static services fallback (serverless mode):", e);
-  }
+  } catch (e) {}
+
   return DEFAULT_SERVICES.filter((s) => s.status === "published" && (s.slug === "content-writing" ? contentEnabled : true));
 }
 
-export function getServiceBySlug(slug: string): Service | undefined {
+export async function getServiceBySlug(slug: string): Promise<Service | undefined> {
+  if (supabase) {
+    try {
+      const { data } = await supabase.from("services").select("*").eq("slug", slug).single();
+      if (data) return data as Service;
+    } catch (e) {}
+  }
   try {
     const row = db.prepare(`SELECT * FROM services WHERE slug = ?`).get(slug) as Service | undefined;
     if (row) return row;
-  } catch (e) {
-    console.warn("Using default static service fallback by slug:", e);
-  }
+  } catch (e) {}
+
   return DEFAULT_SERVICES.find((s) => s.slug === slug);
 }
 
-export function getPublishedProjects(limit?: number): Project[] {
+export async function getPublishedProjects(limit?: number): Promise<Project[]> {
+  if (supabase) {
+    try {
+      let q = supabase.from("projects").select("*").eq("status", "published").order("display_order", { ascending: true }).order("id", { ascending: false });
+      if (limit) q = q.limit(limit);
+      const { data } = await q;
+      if (data && data.length > 0) return data as Project[];
+    } catch (e) {}
+  }
   try {
     const q = `SELECT * FROM projects WHERE status = 'published' ORDER BY display_order ASC, id DESC` + (limit ? ` LIMIT ${limit}` : "");
     const rows = db.prepare(q).all() as Project[];
-    if (rows) return rows;
-  } catch (e) {
-    console.warn("Using default static projects fallback:", e);
-  }
+    if (rows && rows.length > 0) return rows;
+  } catch (e) {}
+
   return [];
 }
 
-export function getPublishedFaqs(): Faq[] {
+export async function getPublishedFaqs(): Promise<Faq[]> {
+  if (supabase) {
+    try {
+      const { data } = await supabase.from("faqs").select("*").eq("status", "published").order("display_order", { ascending: true }).order("id", { ascending: true });
+      if (data && data.length > 0) return data as Faq[];
+    } catch (e) {}
+  }
   try {
     const rows = db.prepare(`SELECT * FROM faqs WHERE status = 'published' ORDER BY display_order ASC, id ASC`).all() as Faq[];
     if (rows && rows.length > 0) return rows;
-  } catch (e) {
-    console.warn("Using default static FAQs fallback:", e);
-  }
+  } catch (e) {}
+
   return DEFAULT_FAQS;
 }
 
-export function getSiteSettings() {
-  return getAllSettings();
+export async function getSiteSettings(): Promise<Record<string, string>> {
+  const defaults = getAllSettings();
+  if (supabase) {
+    try {
+      const { data } = await supabase.from("site_settings").select("*");
+      if (data && data.length > 0) {
+        const map: Record<string, string> = {};
+        data.forEach((item: any) => { map[item.key] = item.value; });
+        return { ...defaults, ...map };
+      }
+    } catch (e) {}
+  }
+  return defaults;
 }

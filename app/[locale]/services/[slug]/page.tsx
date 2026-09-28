@@ -13,7 +13,7 @@ export async function generateMetadata({
 }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
   const { locale: raw, slug } = await params;
   const locale = (locales.includes(raw as Locale) ? raw : defaultLocale) as Locale;
-  const service = getServiceBySlug(slug);
+  const service = await getServiceBySlug(slug);
   if (!service) return {};
   return {
     title: locale === "ar" ? service.name_ar : service.name_en,
@@ -27,15 +27,15 @@ export default async function ServiceDetailPage({
   const { locale: raw, slug } = await params;
   const locale = (locales.includes(raw as Locale) ? raw : defaultLocale) as Locale;
   const dict = getDictionary(locale);
-  const service = getServiceBySlug(slug);
+  const service = await getServiceBySlug(slug);
   if (!service || service.status !== "published") notFound();
 
   const Icon = getIcon(service.icon);
   const name = locale === "ar" ? service.name_ar : service.name_en;
   const desc = locale === "ar" ? service.desc_ar : service.desc_en;
   const features: string[] = JSON.parse(locale === "ar" ? service.features_ar : service.features_en);
-  const relatedFaqs = getPublishedFaqs().filter((f) => f.service_id === service.id);
-  const relatedProjects = getPublishedProjects().filter((p) => p.service_id === service.id);
+  const relatedFaqs = (await getPublishedFaqs()).filter((f) => f.service_id === service.id);
+  const relatedProjects = (await getPublishedProjects()).filter((p) => p.service_id === service.id);
 
   return (
     <>

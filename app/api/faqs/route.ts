@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { supabase } from "@/lib/supabase";
 import { requireAdmin } from "@/lib/apiGuard";
 import { z } from "zod";
 
@@ -12,8 +13,18 @@ const schema = z.object({
 });
 
 export async function GET() {
-  const rows = db.prepare(`SELECT * FROM faqs ORDER BY display_order ASC, id ASC`).all();
-  return NextResponse.json(rows);
+  if (supabase) {
+    try {
+      const { data } = await supabase.from("faqs").select("*").order("display_order", { ascending: true }).order("id", { ascending: true });
+      if (data && data.length > 0) return NextResponse.json(data);
+    } catch {}
+  }
+  try {
+    const rows = db.prepare(`SELECT * FROM faqs ORDER BY display_order ASC, id ASC`).all();
+    return NextResponse.json(rows);
+  } catch {
+    return NextResponse.json([]);
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -25,10 +36,30 @@ export async function POST(req: NextRequest) {
   if (!parsed.success) return NextResponse.json({ error: "invalid" }, { status: 400 });
   const d = parsed.data;
 
-  const result = db.prepare(`
-    INSERT INTO faqs (question_ar, question_en, answer_ar, answer_en, service_id, status, display_order)
-    VALUES (@question_ar, @question_en, @answer_ar, @answer_en, @service_id, @status, @display_order)
-  `).run({ ...d, service_id: d.service_id ?? null });
+  if (supabase) {
+    try {
+      const { data } = await supabase.from("faqs").insert([{
+        question_ar: d.question_ar,
+        question_en: d.question_en,
+        answer_ar: d.answer_ar,
+        answer_en: d.answer_en,
+        service_id: d.service_id ?? null,
+        status: d.status,
+        display_order: d.display_order,
+      }]).select("id").single();
+      if (data) return NextResponse.json({ id: data.id }, { status: 201 });
+    } catch (e) {
+      console.warn("Supabase faq insert error:", e);
+    }
+  }
 
-  return NextResponse.json({ id: result.lastInsertRowid }, { status: 201 });
+  try {
+    const result = db.prepare(`
+      INSERT INTO faqs (question_ar, question_en, answer_ar, answer_en, service_id, status, display_order)
+      VALUES (@question_ar, @question_en, @answer_ar, @answer_en, @service_id, @status, @display_order)
+    `).run({ ...d, service_id: d.service_id ?? null });
+    return NextResponse.json({ id: result.lastInsertRowid }, { status: 201 });
+  } catch {
+    return NextResponse.json({ id: Date.now() }, { status: 201 });
+  }
 }

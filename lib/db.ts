@@ -4,13 +4,14 @@ import fs from "fs";
 
 let dbInstance: Database.Database | null = null;
 
-export function getDb(): Database.Database | null {
+export function getDb(): Database.Database  | null {
   if (dbInstance) return dbInstance;
   try {
     const DB_PATH = process.env.DATABASE_PATH || path.join(process.cwd(), "db", "nexa.sqlite");
     const isNew = !fs.existsSync(/* turbopackIgnore: true */ DB_PATH);
     const db = new Database(DB_PATH, { timeout: 5000 });
-    db.pragma("journal_mode = WAL");
+    // Disable WAL mode as it can cause issues in some environments
+    // db.pragma("journal_mode = WAL");
     db.pragma("foreign_keys = ON");
 
     const schemaPath = path.join(process.cwd(), "db", "schema.sql");
