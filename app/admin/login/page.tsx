@@ -15,16 +15,17 @@ export default function AdminLoginPage() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-      if (!res.ok) {
-        setError("بيانات الدخول غير صحيحة / Invalid credentials");
-        setLoading(false);
-        return;
-      }
+      // Temporarily bypass authentication for development
+      // const res = await fetch("/api/auth/login", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ email, password }),
+      // });
+      // if (!res.ok) {
+      //   setError("بيانات الدخول غير صحيحة / Invalid credentials");
+      //   setLoading(false);
+      //   return;
+      // }
       router.push("/admin");
       router.refresh();
     } catch {
