@@ -2,8 +2,8 @@ import type Database from "better-sqlite3";
 import { hashPassword } from "../lib/auth";
 
 export function seed(db: Database.Database) {
-  const adminEmail = process.env.ADMIN_EMAIL || "admin@nexadigital.com";
-  const adminPassword = process.env.ADMIN_PASSWORD || "ChangeMe123!";
+  const adminEmail = process.env.ADMIN_EMAIL || "dnexa99@gmail.com";
+  const adminPassword = process.env.ADMIN_PASSWORD || "achrafnexaamir";
 
   db.prepare(
     `INSERT OR IGNORE INTO users (email, password_hash, name, role) VALUES (?, ?, ?, 'admin')`
