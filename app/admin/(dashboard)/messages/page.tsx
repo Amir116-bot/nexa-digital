@@ -1,74 +1,37 @@
-"use client";
+import { db } from "@/lib/db";
+import { supabase } from "@/lib/supabase";
+import AdminMessagesClient, { MsgRow } from "./AdminMessagesClient";
 
-import { useEffect, useState } from "react";
-import { Trash2 } from "lucide-react";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
-type MsgRow = { id: number; name: string; email: string; subject: string; message: string; status: string; created_at: string };
-
-const labels: Record<string, string> = { new: "جديدة", read: "مقروءة", replied: "تم الرد" };
-
-export default function AdminMessagesPage() {
-  const [rows, setRows] = useState<MsgRow[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  async function load() {
+async function getMessages(): Promise<MsgRow[]> {
+  if (supabase) {
     try {
-      setLoading(true);
-      const res = await fetch("/api/messages");
-      const data = await res.json();
-      if (Array.isArray(data)) {
-        setRows(data);
-      } else {
-        setRows([]);
+      const { data, error } = await supabase
+        .from("contact_messages")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Supabase contact_messages fetch error:", error.message);
+      } else if (data) {
+        return data as MsgRow[];
       }
     } catch (e) {
-      console.error("Error loading messages:", e);
-      setRows([]);
-    } finally {
-      setLoading(false);
+      console.error("Supabase fetch exception in AdminMessagesPage:", e);
     }
   }
 
-  useEffect(() => { load(); }, []);
-
-  async function setStatus(id: number, status: string) {
-    await fetch(`/api/messages/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ status }) });
-    load();
+  try {
+    const rows = db.prepare(`SELECT * FROM contact_messages ORDER BY created_at DESC`).all() as MsgRow[];
+    return rows;
+  } catch {
+    return [];
   }
+}
 
-  async function remove(id: number) {
-    if (!confirm("حذف هذه الرسالة؟")) return;
-    await fetch(`/api/messages/${id}`, { method: "DELETE" });
-    load();
-  }
-
-  if (loading) {
-    return <p className="text-center text-gray-500 py-10">جاري تحميل الرسائل...</p>;
-  }
-
-  return (
-    <div>
-      <h1 className="text-xl font-bold text-[#0b1e3f]">رسائل التواصل</h1>
-      <div className="mt-6 space-y-3">
-        {rows.map((r) => (
-          <div key={r.id} className="rounded-2xl border border-black/5 bg-white p-5">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="font-medium text-[#0b1e3f]">{r.name} — <span className="text-gray-500">{r.email}</span></p>
-                {r.subject && <p className="mt-1 text-sm text-gray-500">{r.subject}</p>}
-              </div>
-              <div className="flex shrink-0 items-center gap-2">
-                <select value={r.status} onChange={(e) => setStatus(r.id, e.target.value)} className="input">
-                  {Object.entries(labels).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
-                </select>
-                <button onClick={() => remove(r.id)} className="rounded-lg p-2 text-red-600 hover:bg-red-50"><Trash2 size={16} /></button>
-              </div>
-            </div>
-            <p className="mt-3 whitespace-pre-wrap text-sm text-gray-700">{r.message}</p>
-          </div>
-        ))}
-        {rows.length === 0 && <p className="text-center text-gray-400 py-6">لا توجد رسائل بعد</p>}
-      </div>
-    </div>
-  );
+export default async function AdminMessagesPage() {
+  const initialMessages = await getMessages();
+  return <AdminMessagesClient initialRows={initialMessages} />;
 }
