@@ -15,7 +15,7 @@ export default async function FaqPage({ params }: { params: Promise<{ locale: st
   const { locale: raw } = await params;
   const locale = (locales.includes(raw as Locale) ? raw : defaultLocale) as Locale;
   const dict = getDictionary(locale);
-  const faqs = getPublishedFaqs();
+  const faqs = await getPublishedFaqs();
 
   return (
     <>

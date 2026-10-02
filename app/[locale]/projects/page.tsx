@@ -1,5 +1,5 @@
 import { locales, defaultLocale, getDictionary, type Locale } from "@/lib/i18n/config";
-import { getPublishedProjects } from "@/lib/data";
+import { getPublishedProjects, type Project } from "@/lib/data";
 import PageHeader from "@/components/ui/PageHeader";
 import { ExternalLink } from "lucide-react";
 import type { Metadata } from "next";
@@ -15,7 +15,7 @@ export default async function ProjectsPage({ params }: { params: Promise<{ local
   const { locale: raw } = await params;
   const locale = (locales.includes(raw as Locale) ? raw : defaultLocale) as Locale;
   const dict = getDictionary(locale);
-  const projects = getPublishedProjects();
+  const projects: Project[] = await getPublishedProjects();
 
   return (
     <>
@@ -26,7 +26,7 @@ export default async function ProjectsPage({ params }: { params: Promise<{ local
             <p className="text-center text-[var(--color-text-soft)]">{dict.projectsSection.empty}</p>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.map((p) => (
+              {projects.map((p: Project) => (
                 <div key={p.id} className="overflow-hidden rounded-2xl border border-black/5 bg-white">
                   <div className="aspect-video gradient-brand" />
                   <div className="p-5">

@@ -4,9 +4,9 @@ import { getPublishedServices } from "@/lib/data";
 
 const BASE_URL = process.env.SITE_URL || "https://example.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPaths = ["", "/services", "/projects", "/about", "/how-we-work", "/faq", "/contact", "/quote", "/privacy", "/terms"];
-  const services = getPublishedServices();
+  const services = await getPublishedServices();
 
   const entries: MetadataRoute.Sitemap = [];
   for (const locale of locales) {

@@ -16,7 +16,7 @@ export default async function HowWeWorkPage({ params }: { params: Promise<{ loca
   const { locale: raw } = await params;
   const locale = (locales.includes(raw as Locale) ? raw : defaultLocale) as Locale;
   const dict = getDictionary(locale);
-  const settings = getSiteSettings();
+  const settings = await getSiteSettings();
 
   return (
     <>
