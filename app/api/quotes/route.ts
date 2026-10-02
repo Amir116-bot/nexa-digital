@@ -9,13 +9,24 @@ import fs from "fs";
 import crypto from "crypto";
 
 export async function GET() {
-  // Authentication disabled for development - re-enable in production
-  // const { response } = await requireAdmin();
-  // if (response) return response;
+  const { response } = await requireAdmin();
+  if (response) return response;
 
   if (supabase) {
-    const { data } = await supabase.from("quote_requests").select("*").order("created_at", { ascending: false });
-    if (data && data.length > 0) return NextResponse.json(data);
+    try {
+      const { data, error } = await supabase
+        .from("quote_requests")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Supabase quote_requests error:", error.message);
+      } else if (data) {
+        return NextResponse.json(data);
+      }
+    } catch (e) {
+      console.error("Supabase quote_requests exception:", e);
+    }
   }
 
   try {
@@ -96,7 +107,7 @@ export async function POST(req: NextRequest) {
 
   if (supabase) {
     try {
-      await supabase.from("quote_requests").insert([{
+      const { error } = await supabase.from("quote_requests").insert([{
         full_name: d.fullName,
         email: d.email,
         phone: d.phone,
@@ -109,6 +120,7 @@ export async function POST(req: NextRequest) {
         file_path: filePath,
         status: "new",
       }]);
+      if (error) console.error("Supabase quote_requests insert error:", error.message);
     } catch (e) {
       console.warn("Supabase insertion error:", e);
     }

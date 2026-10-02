@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { requireAdmin } from "@/lib/apiGuard";
 import { z } from "zod";
-
 import { supabase } from "@/lib/supabase";
 
 export async function GET() {
@@ -10,8 +9,20 @@ export async function GET() {
   if (response) return response;
 
   if (supabase) {
-    const { data } = await supabase.from("contact_messages").select("*").order("created_at", { ascending: false });
-    if (data && data.length > 0) return NextResponse.json(data);
+    try {
+      const { data, error } = await supabase
+        .from("contact_messages")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Supabase contact_messages error:", error.message);
+      } else if (data) {
+        return NextResponse.json(data);
+      }
+    } catch (e) {
+      console.error("Supabase fetch exception:", e);
+    }
   }
 
   try {
@@ -29,7 +40,6 @@ const schema = z.object({
   message: z.string().min(1).max(5000),
 });
 
-// Basic per-IP rate limiting (in-memory; fine for a single instance / demo).
 const hits = new Map<string, number[]>();
 function isRateLimited(ip: string) {
   const now = Date.now();
@@ -56,13 +66,14 @@ export async function POST(req: NextRequest) {
 
   if (supabase) {
     try {
-      await supabase.from("contact_messages").insert([{
+      const { error } = await supabase.from("contact_messages").insert([{
         name,
         email,
         subject,
         message,
         status: "new",
       }]);
+      if (error) console.error("Supabase contact message insert error:", error.message);
     } catch (e) {
       console.warn("Supabase insertion error:", e);
     }
