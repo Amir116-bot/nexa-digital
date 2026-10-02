@@ -23,10 +23,24 @@ export default function AdminQuotesPage() {
   const [rows, setRows] = useState<QuoteRow[]>([]);
   const [active, setActive] = useState<QuoteRow | null>(null);
   const [notes, setNotes] = useState("");
+  const [loading, setLoading] = useState(true);
 
   async function load() {
-    const res = await fetch("/api/quotes");
-    setRows(await res.json());
+    try {
+      setLoading(true);
+      const res = await fetch("/api/quotes");
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setRows(data);
+      } else {
+        setRows([]);
+      }
+    } catch (e) {
+      console.error("Error loading quotes:", e);
+      setRows([]);
+    } finally {
+      setLoading(false);
+    }
   }
   useEffect(() => { load(); }, []);
 

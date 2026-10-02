@@ -9,11 +9,26 @@ const labels: Record<string, string> = { new: "جديدة", read: "مقروءة"
 
 export default function AdminMessagesPage() {
   const [rows, setRows] = useState<MsgRow[]>([]);
+  const [loading, setLoading] = useState(true);
 
   async function load() {
-    const res = await fetch("/api/messages");
-    setRows(await res.json());
+    try {
+      setLoading(true);
+      const res = await fetch("/api/messages");
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setRows(data);
+      } else {
+        setRows([]);
+      }
+    } catch (e) {
+      console.error("Error loading messages:", e);
+      setRows([]);
+    } finally {
+      setLoading(false);
+    }
   }
+
   useEffect(() => { load(); }, []);
 
   async function setStatus(id: number, status: string) {
@@ -25,6 +40,10 @@ export default function AdminMessagesPage() {
     if (!confirm("حذف هذه الرسالة؟")) return;
     await fetch(`/api/messages/${id}`, { method: "DELETE" });
     load();
+  }
+
+  if (loading) {
+    return <p className="text-center text-gray-500 py-10">جاري تحميل الرسائل...</p>;
   }
 
   return (
@@ -48,7 +67,7 @@ export default function AdminMessagesPage() {
             <p className="mt-3 whitespace-pre-wrap text-sm text-gray-700">{r.message}</p>
           </div>
         ))}
-        {rows.length === 0 && <p className="text-center text-gray-400">لا توجد رسائل بعد</p>}
+        {rows.length === 0 && <p className="text-center text-gray-400 py-6">لا توجد رسائل بعد</p>}
       </div>
     </div>
   );
