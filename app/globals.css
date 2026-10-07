@@ -3,8 +3,8 @@
 :root {
   --color-primary: #000000;   /* أسود */
   --color-secondary: #ffffff; /* أبيض */
-  --color-accent: #FFD700;    /* ذهبي للأزرار والعناصر البارزة */
-  --color-accent-hover: #E6C200; /* ذهبي داكن عند التمرير */
+  --color-accent: #C9A227;    /* ذهبي نكسة ديجيتال الأصلي */
+  --color-accent-hover: #B08D1E; /* ذهبي أغمق للتمرير */
   --color-bg: #000000;
   --color-bg-soft: #111111;
   --color-text: #ffffff;
@@ -22,8 +22,8 @@ html[dir="ltr"] body {
 }
 
 body {
-  background: var(--color-bg);
-  color: var(--color-text);
+  background-color: var(--color-bg) !important;
+  color: var(--color-text) !important;
 }
 
 .container-nexa {
@@ -33,65 +33,79 @@ body {
 }
 
 /* =========================================================
-   تنسيق الأزرار الذهبية بشكل افتراضي وبديل للموقع بالكامل
+   تنسيق الأزرار الذهبية المخصصة (Primary & Action Buttons)
    ========================================================= */
 
-/* 1. جعل كافة أزرار التفاعل button افتراضياً باللون الذهبي */
-button,
-.btn,
-.btn-gold {
-  background-color: var(--color-accent) !important;
-  color: #000000 !important; /* خط أسود لتباين بارز وواضح */
+.btn-gold,
+.btn-primary {
+  background-color: #C9A227 !important;
+  color: #000000 !important;
   font-weight: 700 !important;
-  padding: 0.625rem 1.35rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--color-accent) !important;
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 14px rgba(255, 215, 0, 0.25); /* بريق وتأثير ظلي ذهبي */
+  border: 1px solid #C9A227 !important;
+  box-shadow: 0 4px 15px rgba(201, 162, 39, 0.2) !important;
+  transition: all 0.2s ease-in-out !important;
 }
 
-button:hover,
-.btn:hover,
-.btn-gold:hover {
-  background-color: var(--color-accent-hover) !important;
-  border-color: var(--color-accent-hover) !important;
+.btn-gold:hover,
+.btn-primary:hover {
+  background-color: #B08D1E !important;
+  border-color: #B08D1E !important;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+  box-shadow: 0 6px 20px rgba(201, 162, 39, 0.35) !important;
 }
 
-/* 2. الأزرار الشفافة ذات الإطار الذهبي (Outline) */
 .btn-gold-outline {
   background-color: transparent !important;
-  color: var(--color-accent) !important;
-  font-weight: 600 !important;
-  padding: 0.625rem 1.25rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--color-accent) !important;
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  color: #C9A227 !important;
+  border: 1px solid #C9A227 !important;
 }
 
 .btn-gold-outline:hover {
-  background-color: var(--color-accent) !important;
+  background-color: #C9A227 !important;
   color: #000000 !important;
-  box-shadow: 0 4px 14px rgba(255, 215, 0, 0.25);
 }
 
 /* =========================================================
-   تنسيقات المدخلات والعناصر الأخرى
+   تنسيق خاص لقسم الأسئلة الشائعة (FAQ Accordion)
+   ========================================================= */
+
+/* استثناء أزرار الأسئلة الشائعة وجعل خلفيتها داكنة وليست صفراء */
+[data-state], 
+details summary,
+.faq-item button,
+.faq-button {
+  background-color: #111111 !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(201, 162, 39, 0.2) !important;
+  border-radius: 0.5rem !important;
+  box-shadow: none !important;
+}
+
+/* التفاعل عند تحريك الماوس أو فتح السؤال */
+[data-state="open"],
+details[open] summary,
+.faq-item button:hover,
+.faq-button:hover {
+  border-color: #C9A227 !important;
+  color: #C9A227 !important;
+}
+
+/* النصوص والأيقونات داخل أزرار الأسئلة الشائعة */
+[data-state] *, 
+details summary *,
+.faq-item button *,
+.faq-button * {
+  color: inherit !important;
+}
+
+/* =========================================================
+   العناصر المساعدة والتأثيرات
    ========================================================= */
 
 .input {
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background-color: var(--color-bg-soft);
-  color: var(--color-text);
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  background-color: #111111 !important;
+  color: #ffffff !important;
   border-radius: 0.5rem;
   padding: 0.6rem 0.9rem;
   font-size: 0.875rem;
@@ -99,18 +113,18 @@ button:hover,
 }
 
 .input:focus {
-  border-color: var(--color-accent);
+  border-color: #C9A227 !important;
 }
 
 .gradient-brand {
-  background-color: #000000;
+  background-color: #000000 !important;
 }
 
 .text-gradient-brand {
-  background-image: linear-gradient(135deg, var(--color-accent), #B8860B);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  background-image: linear-gradient(135deg, #C9A227, #B8860B) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
