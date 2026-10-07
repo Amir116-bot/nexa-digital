@@ -37,17 +37,17 @@ export default function Navbar({
   return (
     <header
       className={`sticky top-0 z-50 w-full transition-all ${
-        scrolled ? "bg-white/90 shadow-sm backdrop-blur border-b border-black/5" : "bg-transparent"
+        scrolled ? "bg-black/90 shadow-sm backdrop-blur border-b border-[var(--color-secondary)]/20" : "bg-transparent"
       }`}
     >
       <div className="container-nexa flex h-16 items-center justify-between">
-        <Link href={`/${locale}`} className="text-lg font-bold text-[var(--color-primary)]">
-          {siteName}
+        <Link href={`/${locale}`} className="flex items-center gap-2">
+          <img src="/nexa_logo.png" alt={siteName} className="h-10 w-auto" />
         </Link>
 
         <nav className="hidden items-center gap-6 lg:flex">
           {links.map((l) => (
-            <Link key={l.href} href={l.href} className="text-sm text-[var(--color-text)]/80 transition hover:text-[var(--color-primary)]">
+            <Link key={l.href} href={l.href} className="text-sm text-[var(--color-text)]/80 transition hover:text-[var(--color-secondary)]">
               {l.label}
             </Link>
           ))}
@@ -63,17 +63,17 @@ export default function Navbar({
           </Link>
         </div>
 
-        <button className="lg:hidden" onClick={() => setOpen(true)} aria-label="Open menu">
+        <button className="lg:hidden text-white" onClick={() => setOpen(true)} aria-label="Open menu">
           <Menu size={24} />
         </button>
       </div>
 
       {open && (
-        <div className="fixed inset-0 z-50 bg-white lg:hidden">
+        <div className="fixed inset-0 z-50 bg-black lg:hidden">
           <div className="container-nexa flex h-16 items-center justify-between">
-            <span className="text-lg font-bold text-[var(--color-primary)]">{siteName}</span>
+            <img src="/nexa_logo.png" alt={siteName} className="h-10 w-auto" />
             <button onClick={() => setOpen(false)} aria-label="Close menu">
-              <X size={24} />
+              <X size={24} className="text-white" />
             </button>
           </div>
           <nav className="container-nexa flex flex-col gap-1 pt-4">
@@ -82,7 +82,7 @@ export default function Navbar({
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-3 text-base text-[var(--color-text)] hover:bg-black/5"
+                className="rounded-lg px-3 py-3 text-base text-[var(--color-text)] hover:bg-[var(--color-secondary)]/10"
               >
                 {l.label}
               </Link>

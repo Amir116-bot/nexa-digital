@@ -18,15 +18,15 @@ export default function Footer({
   ].filter((s) => s.url);
 
   return (
-    <footer className="border-t border-black/5 bg-[var(--color-bg-soft)]">
+    <footer className="border-t border-[var(--color-secondary)]/20 bg-[var(--color-bg-soft)]">
       <div className="container-nexa grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="text-lg font-bold text-[var(--color-primary)]">{settings.site_name}</p>
+          <img src="/nexa_logo.png" alt={settings.site_name} className="h-12 w-auto mb-4" />
           <p className="mt-3 text-sm leading-6 text-[var(--color-text-soft)]">{dict.footer.desc}</p>
         </div>
 
         <div>
-          <p className="font-semibold text-[var(--color-primary)]">{dict.footer.pages}</p>
+          <p className="font-semibold text-[var(--color-secondary)]">{dict.footer.pages}</p>
           <ul className="mt-3 space-y-2 text-sm text-[var(--color-text-soft)]">
             <li><Link href={`/${locale}/about`}>{dict.nav.about}</Link></li>
             <li><Link href={`/${locale}/how-we-work`}>{dict.nav.howWeWork}</Link></li>
@@ -36,7 +36,7 @@ export default function Footer({
         </div>
 
         <div>
-          <p className="font-semibold text-[var(--color-primary)]">{dict.footer.servicesTitle}</p>
+          <p className="font-semibold text-[var(--color-secondary)]">{dict.footer.servicesTitle}</p>
           <ul className="mt-3 space-y-2 text-sm text-[var(--color-text-soft)]">
             <li><Link href={`/${locale}/services`}>{dict.servicesPage.title}</Link></li>
             <li><Link href={`/${locale}/projects`}>{dict.nav.projects}</Link></li>
@@ -45,7 +45,7 @@ export default function Footer({
         </div>
 
         <div>
-          <p className="font-semibold text-[var(--color-primary)]">{dict.footer.contactTitle}</p>
+          <p className="font-semibold text-[var(--color-secondary)]">{dict.footer.contactTitle}</p>
           <ul className="mt-3 space-y-2 text-sm text-[var(--color-text-soft)]">
             <li>{settings.email}</li>
             <li dir="ltr" className="text-end">{settings.phone}</li>
@@ -54,7 +54,7 @@ export default function Footer({
           {social.length > 0 && (
             <div className="mt-4 flex gap-3">
               {social.map(({ key, icon: Icon, url }) => (
-                <a key={key} href={url} target="_blank" rel="noreferrer" className="text-[var(--color-primary)]/70 hover:text-[var(--color-primary)]">
+                <a key={key} href={url} target="_blank" rel="noreferrer" className="text-[var(--color-secondary)]/70 hover:text-[var(--color-secondary)]">
                   <Icon size={18} />
                 </a>
               ))}
@@ -63,7 +63,7 @@ export default function Footer({
         </div>
       </div>
 
-      <div className="border-t border-black/5">
+      <div className="border-t border-[var(--color-secondary)]/20">
         <div className="container-nexa flex flex-col items-center justify-between gap-3 py-5 text-xs text-[var(--color-text-soft)] sm:flex-row">
           <p>© {year} {settings.site_name}. {dict.footer.rights}</p>
           <div className="flex gap-4">
