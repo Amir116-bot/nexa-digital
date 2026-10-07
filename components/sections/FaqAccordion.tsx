@@ -9,7 +9,7 @@ export default function FaqAccordion({ faqs, locale }: { faqs: Faq[]; locale: Lo
   const [openId, setOpenId] = useState<number | null>(faqs[0]?.id ?? null);
 
   return (
-    <div className="mx-auto mt-10 max-w-3xl divide-y divide-black/5 rounded-2xl border border-black/5 bg-white">
+    <div className="mx-auto mt-10 max-w-3xl divide-y divide-white/10 rounded-2xl border border-white/10 bg-[var(--color-bg-soft)]">
       {faqs.map((f) => {
         const isOpen = openId === f.id;
         return (
@@ -19,10 +19,10 @@ export default function FaqAccordion({ faqs, locale }: { faqs: Faq[]; locale: Lo
               className="flex w-full items-center justify-between gap-4 px-6 py-5 text-start"
               aria-expanded={isOpen}
             >
-              <span className="font-medium text-[var(--color-primary)]">
+              <span className="font-medium text-white">
                 {locale === "ar" ? f.question_ar : f.question_en}
               </span>
-              <ChevronDown className={`shrink-0 transition ${isOpen ? "rotate-180" : ""}`} size={18} />
+              <ChevronDown className={`shrink-0 transition text-white ${isOpen ? "rotate-180" : ""}`} size={18} />
             </button>
             {isOpen && (
               <div className="px-6 pb-5 text-sm leading-7 text-[var(--color-text-soft)]">

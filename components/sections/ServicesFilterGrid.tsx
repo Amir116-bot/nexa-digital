@@ -22,7 +22,7 @@ export default function ServicesFilterGrid({
         <button
           onClick={() => setActive("all")}
           className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
-            active === "all" ? "gradient-brand text-white" : "border border-black/10 text-[var(--color-text)]/70"
+            active === "all" ? "gradient-brand text-white" : "border border-white/10 text-[var(--color-text)]/70"
           }`}
         >
           {dict.servicesPage.filterAll}
@@ -32,7 +32,7 @@ export default function ServicesFilterGrid({
             key={cat}
             onClick={() => setActive(cat)}
             className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
-              active === cat ? "gradient-brand text-white" : "border border-black/10 text-[var(--color-text)]/70"
+              active === cat ? "gradient-brand text-white" : "border border-white/10 text-[var(--color-text)]/70"
             }`}
           >
             {dict.servicesPage.categories[cat] ?? cat}

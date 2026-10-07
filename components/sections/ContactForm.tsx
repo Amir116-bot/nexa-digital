@@ -28,9 +28,9 @@ export default function ContactForm({ dict, locale }: { dict: any; locale: strin
 
   if (status === "success") {
     return (
-      <div className="rounded-2xl border border-black/5 bg-[var(--color-bg-soft)] p-8 text-center">
+      <div className="rounded-2xl border border-white/10 bg-[var(--color-bg-soft)] p-8 text-center">
         <CheckCircle2 className="mx-auto text-[var(--color-accent)]" size={36} />
-        <p className="mt-3 font-semibold text-[var(--color-primary)]">{dict.quotePage.successTitle}</p>
+        <p className="mt-3 font-semibold text-white">{dict.quotePage.successTitle}</p>
         <p className="mt-1 text-sm text-[var(--color-text-soft)]">{dict.quotePage.successText}</p>
       </div>
     );
@@ -39,22 +39,22 @@ export default function ContactForm({ dict, locale }: { dict: any; locale: strin
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <label className="mb-1 block text-sm font-medium text-[var(--color-primary)]">{dict.contactPage.name}</label>
-        <input {...register("name", { required: true })} className="w-full rounded-lg border border-black/10 px-4 py-2.5 text-sm outline-none focus:border-[var(--color-secondary)]" />
+        <label className="mb-1 block text-sm font-medium text-white">{dict.contactPage.name}</label>
+        <input {...register("name", { required: true })} className="w-full rounded-lg border border-white/10 bg-[var(--color-bg-soft)] px-4 py-2.5 text-sm text-white outline-none focus:border-[var(--color-accent)]" />
         {errors.name && <p className="mt-1 text-xs text-red-600">*</p>}
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium text-[var(--color-primary)]">{dict.contactPage.email}</label>
-        <input type="email" {...register("email", { required: true })} className="w-full rounded-lg border border-black/10 px-4 py-2.5 text-sm outline-none focus:border-[var(--color-secondary)]" />
+        <label className="mb-1 block text-sm font-medium text-white">{dict.contactPage.email}</label>
+        <input type="email" {...register("email", { required: true })} className="w-full rounded-lg border border-white/10 bg-[var(--color-bg-soft)] px-4 py-2.5 text-sm text-white outline-none focus:border-[var(--color-accent)]" />
         {errors.email && <p className="mt-1 text-xs text-red-600">*</p>}
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium text-[var(--color-primary)]">{dict.contactPage.subject}</label>
-        <input {...register("subject")} className="w-full rounded-lg border border-black/10 px-4 py-2.5 text-sm outline-none focus:border-[var(--color-secondary)]" />
+        <label className="mb-1 block text-sm font-medium text-white">{dict.contactPage.subject}</label>
+        <input {...register("subject")} className="w-full rounded-lg border border-white/10 bg-[var(--color-bg-soft)] px-4 py-2.5 text-sm text-white outline-none focus:border-[var(--color-accent)]" />
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium text-[var(--color-primary)]">{dict.contactPage.message}</label>
-        <textarea rows={5} {...register("message", { required: true })} className="w-full rounded-lg border border-black/10 px-4 py-2.5 text-sm outline-none focus:border-[var(--color-secondary)]" />
+        <label className="mb-1 block text-sm font-medium text-white">{dict.contactPage.message}</label>
+        <textarea rows={5} {...register("message", { required: true })} className="w-full rounded-lg border border-white/10 bg-[var(--color-bg-soft)] px-4 py-2.5 text-sm text-white outline-none focus:border-[var(--color-accent)]" />
         {errors.message && <p className="mt-1 text-xs text-red-600">*</p>}
       </div>
 

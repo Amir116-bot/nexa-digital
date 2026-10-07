@@ -5,7 +5,7 @@ export default function WhyUs({ dict }: { dict: any }) {
     <section className="bg-[var(--color-bg-soft)] py-20 sm:py-24">
       <div className="container-nexa grid gap-12 lg:grid-cols-2 lg:items-center">
         <div>
-          <h2 className="text-2xl font-bold text-[var(--color-primary)] sm:text-3xl">{dict.why.title}</h2>
+          <h2 className="text-2xl font-bold text-white sm:text-3xl">{dict.why.title}</h2>
         </div>
         <ul className="space-y-4">
           {dict.why.items.map((item: string) => (
