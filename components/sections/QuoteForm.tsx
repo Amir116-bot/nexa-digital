@@ -126,7 +126,7 @@ export default function QuoteForm({
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-full gradient-brand px-6 py-3 font-semibold text-white disabled:opacity-60"
+        className="w-full rounded-full gradient-brand px-6 py-3 font-semibold text-black disabled:opacity-60"
       >
         {isSubmitting ? dict.quotePage.submitting : dict.quotePage.submit}
       </button>

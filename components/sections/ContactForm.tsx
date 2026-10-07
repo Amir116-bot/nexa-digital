@@ -63,7 +63,7 @@ export default function ContactForm({ dict, locale }: { dict: any; locale: strin
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-full gradient-brand px-6 py-3 font-semibold text-white disabled:opacity-60"
+        className="w-full rounded-full gradient-brand px-6 py-3 font-semibold text-black disabled:opacity-60"
       >
         {isSubmitting ? dict.quotePage.submitting : dict.contactPage.send}
       </button>

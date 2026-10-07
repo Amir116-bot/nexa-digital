@@ -57,7 +57,7 @@ export default function Navbar({
           <LangSwitcher locale={locale} label={langLabel} />
           <Link
             href={`/${locale}/quote`}
-            className="rounded-full gradient-brand px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:opacity-90"
+            className="rounded-full gradient-brand px-5 py-2 text-sm font-semibold text-black shadow-sm transition hover:opacity-90"
           >
             {nav.quote}
           </Link>
@@ -92,7 +92,7 @@ export default function Navbar({
               <Link
                 href={`/${locale}/quote`}
                 onClick={() => setOpen(false)}
-                className="rounded-full gradient-brand px-5 py-2 text-sm font-semibold text-white"
+                className="rounded-full gradient-brand px-5 py-2 text-sm font-semibold text-black"
               >
                 {nav.quote}
               </Link>

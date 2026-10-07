@@ -7,11 +7,11 @@ export default function CTA({
   return (
     <section className="py-20 sm:py-24">
       <div className="container-nexa">
-        <div className="rounded-3xl gradient-brand px-8 py-14 text-center text-white sm:px-16">
+        <div className="rounded-3xl gradient-brand px-8 py-14 text-center text-black sm:px-16">
           <h2 className="text-2xl font-bold sm:text-3xl">{dict.cta.title}</h2>
-          <p className="mt-4 text-white/85">{dict.cta.text}</p>
+          <p className="mt-4 text-black/85">{dict.cta.text}</p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link href={`/${locale}/quote`} className="rounded-full bg-white px-7 py-3 font-semibold text-[var(--color-primary)]">
+            <Link href={`/${locale}/quote`} className="rounded-full bg-white px-7 py-3 font-semibold text-black">
               {dict.cta.quoteBtn}
             </Link>
             {whatsappEnabled && (
@@ -19,7 +19,7 @@ export default function CTA({
                 href={`https://wa.me/${whatsapp.replace(/[^\d]/g, "")}`}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-white/40 px-7 py-3 font-semibold text-white hover:bg-white/10"
+                className="rounded-full border border-black/40 px-7 py-3 font-semibold text-black hover:bg-black/10"
               >
                 {dict.cta.whatsappBtn}
               </a>

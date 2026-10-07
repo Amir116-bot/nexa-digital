@@ -42,7 +42,7 @@ body {
 }
 
 .gradient-brand {
-  background-image: linear-gradient(135deg, var(--color-accent), #B8860B);
+  background-image: linear-gradient(180deg, var(--color-accent) 0%, #000000 100%);
 }
 
 .text-gradient-brand {
