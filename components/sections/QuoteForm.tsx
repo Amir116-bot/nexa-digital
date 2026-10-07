@@ -39,7 +39,7 @@ export default function QuoteForm({
 
   if (status === "success") {
     return (
-      <div className="mx-auto max-w-xl rounded-2xl border border-white/10 bg-[var(--color-bg-soft)] p-10 text-center">
+      <div className="mx-auto max-w-xl rounded-2xl border border-[var(--color-accent)] bg-[var(--color-bg-soft)] p-10 text-center">
         <CheckCircle2 className="mx-auto text-[var(--color-accent)]" size={40} />
         <p className="mt-4 text-lg font-semibold text-white">{dict.quotePage.successTitle}</p>
         <p className="mt-2 text-sm text-[var(--color-text-soft)]">{dict.quotePage.successText}</p>
@@ -47,7 +47,7 @@ export default function QuoteForm({
     );
   }
 
-  const input = "w-full rounded-lg border border-white/10 bg-[var(--color-bg-soft)] px-4 py-2.5 text-sm text-white outline-none focus:border-[var(--color-accent)]";
+  const input = "w-full rounded-lg border border-[var(--color-accent)] bg-[var(--color-bg-soft)] px-4 py-2.5 text-sm text-white outline-none focus:border-[var(--color-accent)]";
   const label = "mb-1 block text-sm font-medium text-white";
 
   return (

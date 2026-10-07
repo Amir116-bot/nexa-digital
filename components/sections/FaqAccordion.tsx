@@ -9,7 +9,7 @@ export default function FaqAccordion({ faqs, locale }: { faqs: Faq[]; locale: Lo
   const [openId, setOpenId] = useState<number | null>(faqs[0]?.id ?? null);
 
   return (
-    <div className="mx-auto mt-10 max-w-3xl divide-y divide-white/10 rounded-2xl border border-white/10 bg-[var(--color-bg-soft)]">
+    <div className="mx-auto mt-10 max-w-3xl divide-y divide-white/10 rounded-2xl border border-[var(--color-accent)] bg-[var(--color-bg-soft)]">
       {faqs.map((f) => {
         const isOpen = openId === f.id;
         return (

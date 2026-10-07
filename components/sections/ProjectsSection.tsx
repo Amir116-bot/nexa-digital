@@ -19,7 +19,7 @@ export default function ProjectsSection({
         ) : (
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((p) => (
-              <div key={p.id} className="overflow-hidden rounded-2xl border border-white/10 bg-[var(--color-bg-soft)]">
+              <div key={p.id} className="overflow-hidden rounded-2xl border border-[var(--color-accent)] bg-[var(--color-bg-soft)]">
                 <div className="aspect-video gradient-brand" />
                 <div className="p-5">
                   <p className="text-xs font-medium text-[var(--color-accent)]">

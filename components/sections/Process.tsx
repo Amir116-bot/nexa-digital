@@ -9,7 +9,7 @@ export default function Process({ dict }: { dict: any }) {
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
           {steps.map((step, i) => (
-            <div key={step.title} className="relative rounded-2xl border border-white/10 bg-[var(--color-bg-soft)] p-5">
+            <div key={step.title} className="relative rounded-2xl border border-[var(--color-accent)] bg-[var(--color-bg-soft)] p-5">
               <span className="text-sm font-semibold text-[var(--color-accent)]">{i + 1}</span>
               <p className="mt-2 font-semibold text-white">{step.title}</p>
               <p className="mt-1 text-sm text-[var(--color-text-soft)]">{step.text}</p>

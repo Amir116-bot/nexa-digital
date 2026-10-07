@@ -13,7 +13,7 @@ export default function ServiceCard({
   const desc = locale === "ar" ? service.desc_ar : service.desc_en;
 
   return (
-    <div className="group rounded-2xl border border-white/10 bg-[var(--color-bg-soft)] p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+    <div className="group rounded-2xl border border-[var(--color-accent)] bg-[var(--color-bg-soft)] p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
       <div className="flex h-12 w-12 items-center justify-center rounded-xl gradient-brand text-white">
         <Icon size={22} />
       </div>
