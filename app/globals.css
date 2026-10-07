@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --color-primary: #000000;   /* black */
-  --color-secondary: #ffffff; /* white */
-  --color-accent: #FFD700;    /* gold - for small accents & buttons */
-  --color-accent-hover: #E6C200; /* dark gold for hover */
+  --color-primary: #000000;   /* أسود */
+  --color-secondary: #ffffff; /* أبيض */
+  --color-accent: #FFD700;    /* ذهبي للأزرار والعناصر البارزة */
+  --color-accent-hover: #E6C200; /* ذهبي داكن عند التمرير */
   --color-bg: #000000;
   --color-bg-soft: #111111;
   --color-text: #ffffff;
@@ -32,39 +32,45 @@ body {
   padding-inline: 1.25rem;
 }
 
-/* === تصميم الأزرار الذهبية (Buttons Styles) === */
+/* =========================================================
+   تنسيق الأزرار الذهبية بشكل افتراضي وبديل للموقع بالكامل
+   ========================================================= */
 
-/* زر ذهبي ممتلئ (Primary Gold Button) */
+/* 1. جعل كافة أزرار التفاعل button افتراضياً باللون الذهبي */
+button,
+.btn,
 .btn-gold {
-  background-color: var(--color-accent);
-  color: #000000; /* نص أسود ليكون واضحاً وبارزاً فوق الذهبي */
-  font-weight: 600;
-  padding: 0.625rem 1.25rem;
+  background-color: var(--color-accent) !important;
+  color: #000000 !important; /* خط أسود لتباين بارز وواضح */
+  font-weight: 700 !important;
+  padding: 0.625rem 1.35rem;
   border-radius: 0.5rem;
-  border: 1px solid var(--color-accent);
+  border: 1px solid var(--color-accent) !important;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2); /* تأثير ظلي ذهبي ناعم */
+  box-shadow: 0 4px 14px rgba(255, 215, 0, 0.25); /* بريق وتأثير ظلي ذهبي */
 }
 
+button:hover,
+.btn:hover,
 .btn-gold:hover {
-  background-color: var(--color-accent-hover);
-  border-color: var(--color-accent-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(255, 215, 0, 0.35);
+  background-color: var(--color-accent-hover) !important;
+  border-color: var(--color-accent-hover) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
 }
 
-/* زر إطار ذهبي (Outline Gold Button) */
+/* 2. الأزرار الشفافة ذات الإطار الذهبي (Outline) */
 .btn-gold-outline {
-  background-color: transparent;
-  color: var(--color-accent);
-  font-weight: 600;
+  background-color: transparent !important;
+  color: var(--color-accent) !important;
+  font-weight: 600 !important;
   padding: 0.625rem 1.25rem;
   border-radius: 0.5rem;
-  border: 1px solid var(--color-accent);
+  border: 1px solid var(--color-accent) !important;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   display: inline-flex;
@@ -73,12 +79,15 @@ body {
 }
 
 .btn-gold-outline:hover {
-  background-color: var(--color-accent);
-  color: #000000;
-  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
+  background-color: var(--color-accent) !important;
+  color: #000000 !important;
+  box-shadow: 0 4px 14px rgba(255, 215, 0, 0.25);
 }
 
-/* === عناصر المدخلات (Inputs) === */
+/* =========================================================
+   تنسيقات المدخلات والعناصر الأخرى
+   ========================================================= */
+
 .input {
   border: 1px solid rgba(255, 255, 255, 0.15);
   background-color: var(--color-bg-soft);
