@@ -29,12 +29,15 @@ export default function AdminSidebar({ adminName }: { adminName: string }) {
   }
 
   return (
-    <aside className="flex h-screen w-64 shrink-0 flex-col border-e border-black/10 bg-[#0b1e3f] text-white">
-      <div className="px-6 py-6">
-        <p className="text-lg font-bold">Nexa Digital</p>
-        <p className="text-xs text-white/60">{adminName}</p>
+    <aside className="flex h-screen w-64 shrink-0 flex-col border-e border-[#C9A227]/20 bg-[#0B0B0B] text-white">
+      {/* شعار الشركة واسم المدير */}
+      <div className="px-6 py-8 border-b border-[#C9A227]/10">
+        <p className="text-xl font-bold text-[#C9A227]">Nexa Digital</p>
+        <p className="mt-1 text-sm text-zinc-400">مرحباً، {adminName}</p>
       </div>
-      <nav className="flex-1 space-y-1 px-3">
+
+      {/* روابط لوحة التحكم */}
+      <nav className="flex-1 space-y-2 px-4 py-6 overflow-y-auto">
         {items.map((item) => {
           const active = pathname === item.href;
           const Icon = item.icon;
@@ -42,20 +45,29 @@ export default function AdminSidebar({ adminName }: { adminName: string }) {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition ${
-                active ? "bg-white/15 font-semibold" : "text-white/80 hover:bg-white/10"
+              className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-all duration-200 ${
+                active 
+                  ? "bg-[#C9A227] text-black font-bold shadow-md shadow-[#C9A227]/20" 
+                  : "text-zinc-400 hover:text-[#C9A227] hover:bg-[#C9A227]/10"
               }`}
             >
-              <Icon size={18} />
+              <Icon size={18} className={active ? "text-black" : ""} />
               {item.label}
             </Link>
           );
         })}
       </nav>
-      <button onClick={logout} className="m-3 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-white/80 hover:bg-white/10">
-        <LogOut size={18} />
-        تسجيل الخروج
-      </button>
+
+      {/* زر تسجيل الخروج */}
+      <div className="p-4 border-t border-[#C9A227]/10">
+        <button 
+          onClick={logout} 
+          className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm text-zinc-400 transition-all hover:bg-red-500/10 hover:text-red-500"
+        >
+          <LogOut size={18} />
+          تسجيل الخروج
+        </button>
+      </div>
     </aside>
   );
 }
