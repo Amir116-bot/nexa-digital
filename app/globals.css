@@ -2,12 +2,12 @@
 
 :root {
   --color-primary: #000000;   /* black */
-  --color-secondary: #FFD700; /* gold */
-  --color-accent: #FFD700;    /* gold */
+  --color-secondary: #ffffff; /* white */
+  --color-accent: #FFD700;    /* gold - for small accents only */
   --color-bg: #000000;
-  --color-bg-soft: #1a1a1a;
+  --color-bg-soft: #111111;
   --color-text: #ffffff;
-  --color-text-soft: #cccccc;
+  --color-text-soft: #aaaaaa;
   --font-ar: "Cairo", "Tajawal", sans-serif;
   --font-en: "Inter", "Manrope", sans-serif;
 }
@@ -38,15 +38,15 @@ body {
   outline: none;
 }
 .input:focus {
-  border-color: #FFD700;
+  border-color: var(--color-accent);
 }
 
 .gradient-brand {
-  background-image: linear-gradient(135deg, var(--color-secondary), #B8860B);
+  background-image: linear-gradient(135deg, var(--color-accent), #B8860B);
 }
 
 .text-gradient-brand {
-  background-image: linear-gradient(135deg, var(--color-secondary), #B8860B);
+  background-image: linear-gradient(135deg, var(--color-accent), #B8860B);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

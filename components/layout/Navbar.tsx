@@ -37,7 +37,7 @@ export default function Navbar({
   return (
     <header
       className={`sticky top-0 z-50 w-full transition-all ${
-        scrolled ? "bg-black/90 shadow-sm backdrop-blur border-b border-[var(--color-secondary)]/20" : "bg-transparent"
+        scrolled ? "bg-black/90 shadow-sm backdrop-blur border-b border-white/10" : "bg-transparent"
       }`}
     >
       <div className="container-nexa flex h-16 items-center justify-between">
@@ -47,7 +47,7 @@ export default function Navbar({
 
         <nav className="hidden items-center gap-6 lg:flex">
           {links.map((l) => (
-            <Link key={l.href} href={l.href} className="text-sm text-[var(--color-text)]/80 transition hover:text-[var(--color-secondary)]">
+            <Link key={l.href} href={l.href} className="text-sm text-[var(--color-text)]/80 transition hover:text-white">
               {l.label}
             </Link>
           ))}
@@ -82,7 +82,7 @@ export default function Navbar({
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-3 text-base text-[var(--color-text)] hover:bg-[var(--color-secondary)]/10"
+                className="rounded-lg px-3 py-3 text-base text-[var(--color-text)] hover:bg-white/10"
               >
                 {l.label}
               </Link>
