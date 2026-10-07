@@ -134,3 +134,43 @@ details summary *,
     transition-duration: 0.01ms !important;
   }
 }
+/* =========================================================
+   إصلاح قسم CTA وعناوين الموقع (Force White Text & Gold CTA)
+   ========================================================= */
+
+/* 1. إصلاح خلفية ونص قسم الـ CTA بالكامل */
+.gradient-brand {
+  background-color: #111111 !important;
+  color: #ffffff !important;
+}
+
+/* 2. إجبار كافة النصوص داخل حاوية CTA على الظهور باللون الأبيض */
+.gradient-brand h2,
+.gradient-brand p,
+.gradient-brand span {
+  color: #ffffff !important;
+}
+
+/* 3. جعل أزرار طلب العرض داخل قسم CTA باللون الذهبي النصاع والنص الأسود */
+.gradient-brand a[href*="quote"],
+.gradient-brand Link[href*="quote"] {
+  background-color: #C9A227 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 15px rgba(201, 162, 39, 0.25) !important;
+}
+
+.gradient-brand a[href*="quote"]:hover {
+  background-color: #B08D1E !important;
+}
+
+/* 4. زر الواتساب داخل قسم CTA */
+.gradient-brand a[href*="wa.me"] {
+  border-color: #C9A227 !important;
+  color: #C9A227 !important;
+}
+
+.gradient-brand a[href*="wa.me"]:hover {
+  background-color: #C9A227 !important;
+  color: #000000 !important;
+}
